@@ -7,14 +7,14 @@ const router = express.Router();
 router.use(express.json());
 
 router.get("/", (req, res) => {
-  const enviroment = process.env.PORT || 5000;
+  const enviroment = process.env;
   res.status(200).json({ api: "up", enviroment });
 });
 
 router.get("/shouts", (req, res, next) => {
   Shouts.find()
     .then(shouts => {
-      res.status(200).json(shouts);
+      res.status(200).json({ motd: process.env.MOTD, shouts });
     })
     .catch(error => next(error));
 });
